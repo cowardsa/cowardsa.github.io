@@ -63,17 +63,7 @@
    html = {https://arxiv.org/abs/2303.01839},
    selected={true}
 }
-@article{Coward2022abstractinterp,
-   abstract = {E-graphs are a data structure that compactly represents equivalent expressions. They are constructed via the repeated application of rewrite rules. Often in practical applications, conditional rewrite rules are crucial, but their application requires the detection - at the time the e-graph is being built - that a condition is valid in the domain of application. Detecting condition validity amounts to proving a property of the program. Abstract interpretation is a general method to learn such properties, traditionally used in static analysis tools. We demonstrate that abstract interpretation and e-graph analysis naturally reinforce each other through a tight integration because (i) the e-graph clustering of equivalent expressions induces natural precision refinement of abstractions and (ii) precise abstractions allow the application of deeper rewrite rules (and hence potentially even greater precision). We develop the theory behind this intuition and present an exemplar interval arithmetic implementation, which we apply to the FPBench suite of benchmarks.},
-   author = {S. Coward and G.A. Constantinides and T. Drane},
-   doi = {10.48550/arXiv.2205.14989},
-   issn = {23318422},
-   journal = {arXiv},
-   keywords = {abstract interpretation,e-graph,interval arithmetic,static analysis},
-   title = {Combining E-Graphs with Abstract Interpretation},
-   html = {https://arxiv.org/abs/2205.14989},
-   year = {2022},
-}
+
 @article{Orloski2023asp-dac,
    abstract = {Hardware implementations of elementary functions regularly deploy piecewise polynomial approximations. This work determines the complete design space of piecewise polynomial approximations meeting a given accuracy specification. Knowledge of this design space determines the minimum number of regions required to approximate the function accurately enough and facilitates the generation of optimized hardware which is competitive against the state of the art. Designers can explore the space of feasible architectures without needing to validate their choices. A heuristic based decision procedure is proposed to generate optimal ASIC hardware designs. Targeting alternative hardware technologies simply requires a modified decision procedure to explore the space. We highlight the difficulty in choosing an optimal number of regions to approximate the function with, as this is input width dependent.},
    author = {B. Orloski and S. Coward and T. Drane},
@@ -84,4 +74,23 @@
    title = {Automatic Generation of Complete Polynomial Interpolation Design Space for Hardware Architectures},
    year = {2023},
    html = {https://ieeexplore.ieee.org/document/10044827},
+}
+
+@article{Coward2023DatapathRewriting,
+    title = {{Datapath Verification via Word-Level E-Graph Rewriting}},
+    year = {2023},
+    author = {Coward, Samuel and Morini, Emiliano and Tan, Bryan and Drane, Theo and Constantinides, George},
+    month = {8},
+    url = {http://arxiv.org/abs/2308.00431},
+    arxivId = {2308.00431},
+    html = {http://arxiv.org/abs/2308.00431},
+}
+
+@inproceedings{coward2023combining,
+  title={Combining E-Graphs with Abstract Interpretation},
+  author={Coward, Samuel and Constantinides, George A and Drane, Theo},
+  booktitle={Proceedings of the 12th ACM SIGPLAN International Workshop on the State Of the Art in Program Analysis},
+  pages={1--7},
+  year={2023},
+  html = {https://dl.acm.org/doi/10.1145/3589250.3596144}
 }
