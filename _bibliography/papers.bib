@@ -1,17 +1,119 @@
 ---
 ---
-@article{Coward2020arith,
-   abstract = {Creating optimized hardware for error tolerant applications presents significant challenges as well as opportunities. Many algorithms in computer graphics & vision are error tolerant, as their application level correctness ultimately rests on human perception. This error tolerance can be exploited in reducing hardware implementation cost. The challenge is how to explore the space of application level correct designs to determine the optimized hardware architecture. This paper puts forward an approach to automatically explore the space which maximally exploits the acceptable error to minimize hardware cost for a particular graphics algorithm - Level-Of-Detail. Results, so far, have shown a 26% hardware area improvement.},
-   author = {S. Coward and T. Drane and Y. Harel},
-   doi = {10.1109/ARITH48897.2020.00025},
-   isbn = {9781728171203},
-   journal = {Proceedings - Symposium on Computer Arithmetic},
-   keywords = {accuracy hardware tradeoffs,approximate computing,computer graphics,design automation,floating-point,multiple-precision,numerical analysis,power-efficient},
-   title = {Automatic Design Space Exploration for an Error Tolerant Application},
-   volume = {2020-June},
-   year = {2020},
-   html = {https://ieeexplore.ieee.org/document/9154483}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2024
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@article{arith2022extn,
+  abbr={TCAD},
+  author={Coward, Samuel and Drane, Theo and Constantinides, George A.},
+  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems ({TCAD})}, 
+  title={{ROVER: RTL Optimization via Verified E-Graph Rewriting}}, 
+  year={2024},
+  doi={10.1109/TCAD.2024.3410154}
 }
+
+@article{dac2024extn,
+  abbr={TCAD},
+  author={Coward, Samuel and Drane, Theo and Constantinides, George A.},
+  journal={IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems ({TCAD})}, 
+  title={{Constraint-Aware E-Graph Rewriting for Hardware Performance Optimization}}, 
+  year={2024},
+  doi={10.1109/TCAD.2024.3483096}
+}
+
+@inproceedings{coward2024combining,
+      abbr = {ARITH},
+      title={Combining Power and Arithmetic Optimization via Datapath Rewriting}, 
+      author={Samuel Coward and Theo Drane and Emiliano Morini and George Constantinides},
+      year={2024},
+      booktitle = {31st IEEE Symposium on Computer Arithmetic ({ARITH})},
+      month = {6},
+      doi = {10.1109/ARITH61463.2024.00014}
+}
+
+@inproceedings{drane2024booth,
+      abbr = {ARITH},
+      title={On the Systematic Creation of Faithfully Rounded Commutative Truncated Booth Multipliers}, 
+      author={Theo Drane and Samuel Coward and Mertcan Temel and Joe Leslie-Hurd},
+      year={2024},
+      booktitle = {31st IEEE Symposium on Computer Arithmetic ({ARITH})},
+      month = {6},
+      doi={10.1109/ARITH61463.2024.00027}}
+}
+
+@inproceedings{Cheng2024,
+   abbr = {ASPLOS},
+   author = {Jianyi Cheng and Samuel Coward et al.},
+   booktitle = {29th ACM International Conference on Architectural Support for Programming Languages and Operating Systems ({ASPLOS})},
+   month = {4},
+   title = {{SEER: Super-Optimization Explorer for HLS using E-graph Rewriting with MLIR}},
+   doi = {10.1145/3620665.3640392},
+   year = {2024},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2023
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+@inproceedings{Wanna2023,
+   abbr={ASILOMAR},
+   author = {Andy Wanna and Samuel Coward and Theo Drane and George A. Constantinides and Miloš D. Ercegovac},
+   booktitle = {57th IEEE Asilomar Conference on Signals, Systems, and Computers},
+   month = {12},
+   title = {Multiplier Optimization via E-Graph Rewriting},
+   doi = {10.1109/IEEECONF59524.2023.10476812},
+   year = {2023},
+}
+
+@article{Coward2023AutomatingCD,
+  abbr = {DAC},
+  title={Automating Constraint-Aware Datapath Optimization using E-Graphs},
+  author={Samuel Coward and George A. Constantinides and Theo Drane},
+  journal={2023 60th ACM/IEEE Design Automation Conference (DAC)},
+  year={2023},
+  pages={1-6},
+  url={https://api.semanticscholar.org/CorpusID:257353847},
+  selected={true}
+}
+
+@article{Orloski2023asp-dac,
+   abbr={ASP-DAC},
+   abstract = {Hardware implementations of elementary functions regularly deploy piecewise polynomial approximations. This work determines the complete design space of piecewise polynomial approximations meeting a given accuracy specification. Knowledge of this design space determines the minimum number of regions required to approximate the function accurately enough and facilitates the generation of optimized hardware which is competitive against the state of the art. Designers can explore the space of feasible architectures without needing to validate their choices. A heuristic based decision procedure is proposed to generate optimal ASIC hardware designs. Targeting alternative hardware technologies simply requires a modified decision procedure to explore the space. We highlight the difficulty in choosing an optimal number of regions to approximate the function with, as this is input width dependent.},
+   author = {B. Orloski and S. Coward and T. Drane},
+   doi = {10.1145/3566097.3567840},
+   isbn = {9781450397834},
+   journal = {Proceedings of the Asia and South Pacific Design Automation Conference, ASP-DAC},
+   keywords = {datapath design,elementary function,polynomial interpolation},
+   title = {Automatic Generation of Complete Polynomial Interpolation Design Space for Hardware Architectures},
+   year = {2023},
+   html = {https://ieeexplore.ieee.org/document/10044827},
+}
+
+@inproceedings{coward2023datapath,
+  abbr={FMCAD},
+  title={Datapath Verification via Word-Level E-Graph Rewriting},
+  author={Coward, Samuel and Morini, Emiliano and Tan, Bryan and Drane, Theo and Constantinides, George A},
+  booktitle={CONFERENCE ON FORMAL METHODS IN COMPUTER-AIDED DESIGN--FMCAD 2023},
+  pages={92},
+  url={https://library.oapen.org/bitstream/handle/20.500.12657/85158/1/Nadel-2023-Proceedings%20of%20the%2023rd%20Conference%20on%20Formal%20Methods%20in%20Comput...-vor.pdf#page=106}
+}
+
+@inproceedings{coward2023combining,
+  abbr={SOAP},
+  title={Combining E-Graphs with Abstract Interpretation},
+  author={Coward, Samuel and Constantinides, George A and Drane, Theo},
+  booktitle={Proceedings of the 12th ACM SIGPLAN International Workshop on the State Of the Art in Program Analysis},
+  pages={1--7},
+  year={2023},
+  html = {https://dl.acm.org/doi/10.1145/3589250.3596144}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2022
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @article{Coward2022arith,
    abbr = {ARITH 22},
    abstract = {Manual optimization of Register Transfer Level (RTL) datapath is commonplace in industry but holds back development as it can be very time consuming. We utilize the fact that a complex transformation of one RTL into another equivalent RTL can be broken down into a sequence of smaller, localized transformations. By representing RTL as a graph and deploying modern graph rewriting techniques we can automate the circuit design space exploration, allowing us to discover functionally equivalent but optimized architectures. We demonstrate that modern rewriting frameworks can adequately capture a wide variety of complex optimizations performed by human designers on bit-vector manipulating code, including significant error-prone subtleties regarding the validity of transformations under complex interactions of bitwidths. The proposed automated optimization approach is able to reproduce the results of typical industrial manual optimization, resulting in a reduction in circuit area by up to 71%. Not only does our tool discover optimized RTL, but also correctly identifies that the optimal architecture to implement a given arithmetic expression can depend on the width of the operands, thus producing a library of optimized designs rather than the single design point typically generated by manual optimization. In addition, we demonstrate that prior academic work on maximally exploiting carry-save representation and on multiple constant multiplication are both generalized and extended, falling out as special cases of this paper.},
@@ -52,42 +154,19 @@
    html = {https://dl.acm.org/doi/full/10.1145/3543670},
 }
 
-@article{Coward2023AutomatingCD,
-  abbr = {DAC 23},
-  title={Automating Constraint-Aware Datapath Optimization using E-Graphs},
-  author={Samuel Coward and George A. Constantinides and Theo Drane},
-  journal={2023 60th ACM/IEEE Design Automation Conference (DAC)},
-  year={2023},
-  pages={1-6},
-  url={https://api.semanticscholar.org/CorpusID:257353847},
-  selected={true}
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2020
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-@article{Orloski2023asp-dac,
-   abstract = {Hardware implementations of elementary functions regularly deploy piecewise polynomial approximations. This work determines the complete design space of piecewise polynomial approximations meeting a given accuracy specification. Knowledge of this design space determines the minimum number of regions required to approximate the function accurately enough and facilitates the generation of optimized hardware which is competitive against the state of the art. Designers can explore the space of feasible architectures without needing to validate their choices. A heuristic based decision procedure is proposed to generate optimal ASIC hardware designs. Targeting alternative hardware technologies simply requires a modified decision procedure to explore the space. We highlight the difficulty in choosing an optimal number of regions to approximate the function with, as this is input width dependent.},
-   author = {B. Orloski and S. Coward and T. Drane},
-   doi = {10.1145/3566097.3567840},
-   isbn = {9781450397834},
-   journal = {Proceedings of the Asia and South Pacific Design Automation Conference, ASP-DAC},
-   keywords = {datapath design,elementary function,polynomial interpolation},
-   title = {Automatic Generation of Complete Polynomial Interpolation Design Space for Hardware Architectures},
-   year = {2023},
-   html = {https://ieeexplore.ieee.org/document/10044827},
-}
-
-@inproceedings{coward2023datapath,
-  title={Datapath Verification via Word-Level E-Graph Rewriting},
-  author={Coward, Samuel and Morini, Emiliano and Tan, Bryan and Drane, Theo and Constantinides, George A},
-  booktitle={CONFERENCE ON FORMAL METHODS IN COMPUTER-AIDED DESIGN--FMCAD 2023},
-  pages={92},
-  url={https://library.oapen.org/bitstream/handle/20.500.12657/85158/1/Nadel-2023-Proceedings%20of%20the%2023rd%20Conference%20on%20Formal%20Methods%20in%20Comput...-vor.pdf#page=106}
-}
-
-@inproceedings{coward2023combining,
-  title={Combining E-Graphs with Abstract Interpretation},
-  author={Coward, Samuel and Constantinides, George A and Drane, Theo},
-  booktitle={Proceedings of the 12th ACM SIGPLAN International Workshop on the State Of the Art in Program Analysis},
-  pages={1--7},
-  year={2023},
-  html = {https://dl.acm.org/doi/10.1145/3589250.3596144}
+@article{Coward2020arith,
+   abstract = {Creating optimized hardware for error tolerant applications presents significant challenges as well as opportunities. Many algorithms in computer graphics & vision are error tolerant, as their application level correctness ultimately rests on human perception. This error tolerance can be exploited in reducing hardware implementation cost. The challenge is how to explore the space of application level correct designs to determine the optimized hardware architecture. This paper puts forward an approach to automatically explore the space which maximally exploits the acceptable error to minimize hardware cost for a particular graphics algorithm - Level-Of-Detail. Results, so far, have shown a 26% hardware area improvement.},
+   author = {S. Coward and T. Drane and Y. Harel},
+   doi = {10.1109/ARITH48897.2020.00025},
+   isbn = {9781728171203},
+   journal = {Proceedings - Symposium on Computer Arithmetic},
+   keywords = {accuracy hardware tradeoffs,approximate computing,computer graphics,design automation,floating-point,multiple-precision,numerical analysis,power-efficient},
+   title = {Automatic Design Space Exploration for an Error Tolerant Application},
+   volume = {2020-June},
+   year = {2020},
+   html = {https://ieeexplore.ieee.org/document/9154483}
 }

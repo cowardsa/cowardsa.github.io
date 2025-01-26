@@ -1,9 +1,24 @@
-"ARITH 22":
-  url: https://arith2022.arithsymposium.org/index.html
+"ARITH":
+  url: https://www.arithsymposium.org/
   color: "#00369f"
 
-"FMCAD 22":
-  url: https://fmcad.org/FMCAD22/
+"ASPLOS":
+  url: https://www.asplos-conference.org/asplos2024/
 
-"DAC 23":
+"FMCAD":
+  url: https://www.fmcad.org/
+
+"DAC":
   url: https://www.dac.com/
+
+"ASILOMAR":
+  url: https://www.asilomarsscconf.org/
+
+"ASP-DAC":
+  url: https://www.aspdac.com/
+
+"SOAP":
+  url: https://pldi24.sigplan.org/series/SOAP
+
+"TCAD":
+  url: https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=43
