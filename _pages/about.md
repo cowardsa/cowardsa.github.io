@@ -20,4 +20,4 @@ social: true  # includes social icons at the bottom of the page
 ---
 
 Hi, I recently completed my PhD at Imperial College London in the Circuits and Systems Group, under the supervision of [Professor George Constantinides](https://cas.ee.ic.ac.uk/people/gac1/). I am also a member of the [Intel Graphics Numerical Hardware Group](https://www.intel.com/content/www/us/en/developer/topic-technology/open/graphics-numerical-hardware/overview.html)
-My research looks at all aspects of numerical hardware design and how we can create fast but verified hardware. My [thesis]("assets/pdf/Samuel Coward PhD Thesis Imperial") looks at novel techniques to optimise RTL level circuit designs, with side projects investigating bitvector transformation correctness and tight arithmetic expression bounds.
+My research looks at all aspects of numerical hardware design and how we can create fast but verified hardware. My [thesis](/assets/pdf/Thesis_Imperial.pdf) looks at novel techniques to optimise RTL level circuit designs, with side projects investigating bitvector transformation correctness and tight arithmetic expression bounds.
