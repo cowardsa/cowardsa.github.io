@@ -29,6 +29,21 @@
 - title: Experience
   type: time_table
   contents:
+    - title: 1851 Research Fellow
+      institution: University College Londond, UK
+      year: 2026
+      description:
+        - 3-year research fellowship supported by the Royal Commission for the Exhibition of 1851.
+    - title: PostDoc
+      institution: University College Londond, UK
+      year: 2025
+      description:
+        - Short 6 month postdoctoral position with Alexandra Silva.
+    - title: PostDoc
+      institution: University of Cambridge, UK
+      year: 2025
+      description:
+        - Short 3 month postdoctoral position with Tobias Grosser.
     - title: Graphics Hardware Engineer
       institution: Intel Corporation Corporation, UK.
       year: 2021-present
