@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://cowardsa.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cowardsa.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-05-19T13:05:05+00:00</updated><id>https://cowardsa.github.io/feed.xml</id><title type="html">Samuel Coward</title><subtitle>University College London
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://cowardsa.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cowardsa.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-05-20T10:27:51+00:00</updated><id>https://cowardsa.github.io/feed.xml</id><title type="html">Samuel Coward</title><subtitle>University College London
 </subtitle><entry><title type="html">Teaching Year 10 How CPUs Work</title><link href="https://cowardsa.github.io/blog/2026/cpus/" rel="alternate" type="text/html" title="Teaching Year 10 How CPUs Work" /><published>2026-05-17T15:12:00+00:00</published><updated>2026-05-17T15:12:00+00:00</updated><id>https://cowardsa.github.io/blog/2026/cpus</id><content type="html" xml:base="https://cowardsa.github.io/blog/2026/cpus/"><![CDATA[<h2 id="warming-up">Warming Up</h2>
 
 <p>The opportunity came about through the <a href="https://royalcommission1851.org/">1851 Royal Commission</a>, who support the London Wonder outreach initiative led by the <a href="https://www.big-ideas.org/">Big Ideas</a> charity.
@@ -132,7 +132,157 @@ In round 3 (which we ran out of time for), we move to compilation, where student
 <h2 id="conclusions">Conclusions</h2>
 <p>I was really worried this wouldn’t work, but was shocked when the students really engaged. My favourite student comment overheard by Hayley, “I thought this was going to be dead, but it was actually pretty lit”. Not every student engaged, but at least 15 out of the 20 got really into the activity and seemed to take away something from it. So it was far from perfect, but with some refinement I think the core concept is pretty ideal! Huge thanks to Ralph, Hayley and Sam from Big Ideas who helped make it happen.</p>
 
-<p>You can find the slides <a href="/assets/CPU%20Outreach%20Activity.pptx">here</a> in case any teachers or engineers want to try out the activity in a classroom.</p>]]></content><author><name>Samuel Coward</name></author><category term="outreach" /><summary type="html"><![CDATA[I recently led a 2 hour class for twenty 14 year olds and this is what I taught them]]></summary></entry><entry><title type="html">Are Datapath Circuit Transformations just Compiler Optimisations?</title><link href="https://cowardsa.github.io/blog/2026/compilers/" rel="alternate" type="text/html" title="Are Datapath Circuit Transformations just Compiler Optimisations?" /><published>2026-04-17T15:12:00+00:00</published><updated>2026-04-17T15:12:00+00:00</updated><id>https://cowardsa.github.io/blog/2026/compilers</id><content type="html" xml:base="https://cowardsa.github.io/blog/2026/compilers/"><![CDATA[<p>During a visit to Cornell, I presented a bunch of hardware optimisations to fuse arithmetic operators. Being from a compiler background, Nate asked whether we could view these as more traditional compiler transformations.</p>
+<p>You can find the slides <a href="/assets/CPU%20Outreach%20Activity.pptx">here</a> in case any teachers or engineers want to try out the activity in a classroom.</p>]]></content><author><name>Samuel Coward</name></author><category term="outreach" /><summary type="html"><![CDATA[I recently led a 2 hour class for twenty 14 year olds and this is what I taught them]]></summary></entry><entry><title type="html">verifying EDA and compiler optimizations once and for all</title><link href="https://cowardsa.github.io/blog/2026/parabit/" rel="alternate" type="text/html" title="verifying EDA and compiler optimizations once and for all" /><published>2026-05-17T15:12:00+00:00</published><updated>2026-05-17T15:12:00+00:00</updated><id>https://cowardsa.github.io/blog/2026/parabit</id><content type="html" xml:base="https://cowardsa.github.io/blog/2026/parabit/"><![CDATA[<h2 id="eda-optimizations">EDA Optimizations</h2>
+
+<!-- TODO: Introduce the problem of rewrite correctness in EDA/synthesis tools.
+     Motivate why parametric bitvector equivalences are hard to prove automatically.
+     Summarise the key contributions of ParaBit:
+       1. BWLang representation
+       2. Equality saturation-based solver
+       3. Isabelle proof certificates
+       4. Evaluation on hardware/software benchmarks
+-->
+<p>More often than not the goal of electronic design automation (EDA) tools is to optimize a given circuit design.
+One of the key mechanisms they use is rewriting, namely searching for a smaller circuit within our given design that matches some specific strucutre and replacing it with a more efficient implementation.
+A classic example is replacing <code class="language-plaintext highlighter-rouge">x*2</code> by <code class="language-plaintext highlighter-rouge">x &lt;&lt; 1</code>, as the shift circuit is much cheaper than a multiplication.</p>
+
+<p>It is imperative that these rewrites, which are baked into the EDA tools source code, are correct. 
+If the EDA tool contains an incorrect rewrite, it can silently introduce bugs into the circuit design it’s optimizing. 
+Hardware bugs can be extremely costly so are best avoided otherwise you may have very unhappy tool users. 
+What makes this problem tricky, is that EDA rewrites often manipulate bitvectors of parametric widths, meaning a rewrite can apply to 16-bit or 32-bit bitvectors as well as all the widths in-between.</p>
+
+<p>Like all good researchers, the solution is a new solver called ParaBit, that automatically proves the correctness of the rewrites.
+ParaBit first encodes the problem in a custom language then turns to equality saturation to construct a proof. 
+We’re not the first to tackle this problem.
+<a href="https://drops.dagstuhl.de/storage/00lipics/lipics-vol341-sat2025/LIPIcs.SAT.2025.4/LIPIcs.SAT.2025.4.pdf">Zvika Berger and the CVC5 team</a> made some great progress with the PBV project on these kind of rewrite verification problems, providing an admittedly more general purpose solution than us.
+Our work differs from theirs, in that they attach bitwidths to operators whereas we attach bitwidths to operands removing the need for excessive extension operations. 
+This lets us solve a good chunk more problems as we’ll see later on.</p>
+
+<p>In July 2026, Luigi will be presenting this work at CAV, but further details <a href="/assets/pdf/Parabit.pdf">can be found in the version we submitted</a> (official version will be linked when published and in this version we’ll have proofs for all the axioms).</p>
+
+<h2 id="an-example">An Example</h2>
+<p>Much of the motivation for this project came from my own frustrations in developing EDA tool rewrites for the <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9974492">Rover</a> project. We’ll take a ROVER rewrite as an example.</p>
+
+\[(q\geq r) \Rightarrow
+    \underbrace{(a_p + (b_p + c_p)_q)_r}_{\textrm{lhs}} \equiv \underbrace{((a_p + b_p)_q + c_p)_r}_{\textrm{rhs}} \hspace{0.5cm}\]
+
+<p>This rewrite says that when our width parameters satisfy \(q\geq r\), we can safely replace the lhs by the rhs. Our goal is to prove that this is correct for all possible width parameters. We use the subscript notation to denote the width of a bitvector, namely \(a_p\) denotes a \(p\)-bit bitvector. Similarly, \((b_p + c_p)_q\) means we add up two \(p\)-bit bitvectors and store the result in a \(q\)-bit bitvector.</p>
+
+<p>To construct a proof we’ll be composing axioms of modular arithmetic (which is what our notation is really a shorthand for). Crucial for this proof is the following, where we totally remove the inner width \(u\).</p>
+
+\[u\geq v \Rightarrow (x + y_u)_v \equiv (x + y)_v.\]
+
+<p>This essentially says that when I add up two bitvectors, if I store the result in a width smaller than one of the addends, then it doesn’t matter what the width of the inner addend is. It’ll just get truncated after the addition.</p>
+
+<p>Under the given assumption \(q\geq r\), this axiom applies to both the lhs and rhs of the rewrite:</p>
+
+\[lhs \equiv (a_p + (b_p + c_p)_q)_r \equiv  %\text{\{~using \eqref{eqn:mod_arith_axiom} with condition $q\geq r$~\}} \\
+(a_p + (b_p + c_p))_r \\\]
+
+\[rhs \equiv ((a_p + b_p)_q + c_p)_r \equiv ((a_p + b_p) + c_p)_r\]
+
+<p>Having removed any dependencies on \(q\), the two resulting expressions can now be shown equivalent by associativity of integer addition. 
+This constitutes a series of axiom applications (which we separately verify) that proves the correctness of the rewrite whenever it is applied.</p>
+
+<p>Whilst this looks simple, when we get more complex rewrites and have more axioms to combine finding this proof becomes much more tricky. 
+This is where we turn to <a href="https://en.wikipedia.org/wiki/E-graph">e-graphs and equality saturation</a>, a constructive rewriting procedure where the order in which axioms are applied is not important. We can see how the e-graph encodes the steps that were written out here.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/start-480.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/start-800.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/start-1400.webp" />
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/start.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/mid-480.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/mid-800.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/mid-1400.webp" />
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/mid.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/end-480.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/end-800.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/end-1400.webp" />
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/end.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    Starting from the left ParaBit encodes the initial problem in an e-graph, which initially has only one node per e-class. Then ParaBit applies the axiom described to add new terms to the e-graph (as shown by the newly added nodes in the top e-classes). Lastly after applying the associativity axiom, the lhs and rhs e-classes get merged thus discovering a sequence of axioms that form a proof. 
+</div>
+
+<h2 id="the-parabit-solver">The ParaBit Solver</h2>
+
+<p><a href="https://github.com/luigirinaldi/parabit">ParaBit</a> is implemented in roughly 2k lines of Rust and is built on-top of the <a href="https://github.com/egraphs-good/egg">egg equality saturation library</a>. ParaBit contains 99 axioms, <a href="https://github.com/luigirinaldi/parabit/tree/main/proofs">each of which is verified in the Isabelle theorem prover</a>. ParaBit takes problems specified in our custom BWLang language and discovers a sequence of axioms that prove the correctness of the rewrite using equality saturation.</p>
+
+<p>If ParaBit is able to construct a proof, then ParaBit generates an associated Isabelle certificate script that can be checked independently to verify that our ParaBit proof is valid. 
+This gives users an extra level of confidence in ParaBit’s proofs, so hopefully some industry folks might be willing to try it out!</p>
+
+<p>To test out whether ParaBit is any good we gathered a couple of benchmark sets. Two from the software compilers community (<a href="https://github.com/AliveToolkit/alive2">Alive</a> and <a href="https://dl.acm.org/doi/10.1145/3649837">Hydra</a>) and two from the hardware domain (<a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9974492">Rover</a> and Industry). We compared against the PBV work from the CVC5 team referenced earlier. We see that ParaBit isn’t able to handle quite as many problems as PBV, due to current language limitations, but on the supported subset ParaBit is much more capable across all benchmarks.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/parabit_eval-480.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/parabit_eval-800.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/parabit_eval-1400.webp" />
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/parabit_eval.png" class="img-fluid rounded z-depth-1" width="auto" height="auto" data-zoomable="" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    Results table comparing PBV and ParaBit across four benchmark suites. We separate the benchmarks into single-width (those rewrites containing only a single width parameter) and multiple-width (those rewrites containing several width parameters) subsets. 
+</div>
+
+<p>Out of the 144 problems solved by ParaBit, we were able to successfully verify 142 of the generated Isabelle certificiates. For two problems the proof production step actually ran out of memory. When ParaBit fails to produce a proof it is usually because the equality saturation step either times out or hit a memory limit.</p>
+
+<p>There is clearly further work to be done to ParaBit to handle a larger class of problems and to improve performance across the problem set. The <a href="/assets/pdf/Parabit.pdf">submitted version of the paper</a> (official version will be linked when published) contains far more details and Luigi, John and I will all be at CAV in Lisbon in July 2026, so do come along if you’ve got any questions! If any of this work sounds interesting and you’re looking to collaborate or for Masters projects then get in touch.</p>]]></content><author><name>Luigi Rinaldi</name></author><category term="verification" /><summary type="html"><![CDATA[At CAV 2026 we'll be presenting our new solver called ParaBit, which proves the correctness of EDA and compiler transformations using the theory of parametric bitvectors.]]></summary></entry><entry><title type="html">Are Datapath Circuit Transformations just Compiler Optimisations?</title><link href="https://cowardsa.github.io/blog/2026/compilers/" rel="alternate" type="text/html" title="Are Datapath Circuit Transformations just Compiler Optimisations?" /><published>2026-04-17T15:12:00+00:00</published><updated>2026-04-17T15:12:00+00:00</updated><id>https://cowardsa.github.io/blog/2026/compilers</id><content type="html" xml:base="https://cowardsa.github.io/blog/2026/compilers/"><![CDATA[<p>During a visit to Cornell, I presented a bunch of hardware optimisations to fuse arithmetic operators. Being from a compiler background, Nate asked whether we could view these as more traditional compiler transformations.</p>
 
 <p>TLDR: Yes, you can, but it gets pretty ugly…</p>
 
