@@ -1,5 +1,147 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://cowardsa.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cowardsa.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-06-17T10:04:06+00:00</updated><id>https://cowardsa.github.io/feed.xml</id><title type="html">Samuel Coward</title><subtitle>University College London
-</subtitle><entry><title type="html">Teaching Year 10 How CPUs Work</title><link href="https://cowardsa.github.io/blog/2026/cpus/" rel="alternate" type="text/html" title="Teaching Year 10 How CPUs Work" /><published>2026-05-17T15:12:00+00:00</published><updated>2026-05-17T15:12:00+00:00</updated><id>https://cowardsa.github.io/blog/2026/cpus</id><content type="html" xml:base="https://cowardsa.github.io/blog/2026/cpus/"><![CDATA[<h2 id="warming-up">Warming Up</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://cowardsa.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://cowardsa.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-07-10T11:03:16+00:00</updated><id>https://cowardsa.github.io/feed.xml</id><title type="html">Samuel Coward</title><subtitle>University College London
+</subtitle><entry><title type="html">A CIRCT Project Tutorial</title><link href="https://cowardsa.github.io/blog/2026/demo/" rel="alternate" type="text/html" title="A CIRCT Project Tutorial" /><published>2026-06-30T15:12:00+00:00</published><updated>2026-06-30T15:12:00+00:00</updated><id>https://cowardsa.github.io/blog/2026/demo</id><content type="html" xml:base="https://cowardsa.github.io/blog/2026/demo/"><![CDATA[<h2 id="arith-tutorial-day">ARITH Tutorial Day</h2>
+<p>Just back from <a href="todo">ARITH 2026</a> in Fulda, Germany, where they introduced a new <a href="todo">Tutorial Day</a>! 
+Together, Louis and I, gave the attendees first a brief introduction to <a href="todo">MLIR</a> and <a href="todo">CIRCT</a>, then got them working hands-on building, optimizing and verifying ASIC hardware designs.<br />
+If you want to have a go at home, all the tutorial materials can be found in our <a href="todo">public repo</a>.
+To play through the tutorial, you’ll need to use either a docker build or the VScode dev-containers extension. 
+The goal was to give researchers and industrial engineers a short teaser of the various CIRCT capabilities, people seemed to find it interesting at least, and potentially even useful.<br />
+In this blog post I’ll give a short description of CIRCT and describe the features we presented (that way you can decide if you should care or not…).</p>
+
+<h2 id="what-is-circt">What is CIRCT?</h2>
+<p><a href="https://circt.llvm.org/">CIRCT (Circuit IR Compilers and Tools)</a> is an open-source compiler infrastructure project for digital hardware design.
+It provides reusable compiler dialects, optimizations, and passes built on MLIR.
+CIRCT enables hardware designers and compiler developers to express, transform, and generate circuit representations for FPGAs, ASICs, and other digital systems.</p>
+
+<h3 id="key-features">Key Features:</h3>
+<ul>
+  <li>A hardware-centered IR and dialect ecosystem for digital circuit design.</li>
+  <li>Reusable passes for lowering, verification, and code generation.</li>
+  <li>Integration with <a href="https://mlir.llvm.org/">MLIR</a> and LLVM for compiler-based hardware flows.</li>
+  <li>Support for multiple input formats and backends, including FIRRTL, HW, and system-level representations.</li>
+</ul>
+
+<h3 id="circt-inspiration">CIRCT Inspiration</h3>
+<ul>
+  <li>LLVM and <a href="https://mlir.llvm.org/">MLIR</a>: using compiler infrastructure patterns to make hardware transformation passes composable.</li>
+  <li>Hardware description languages like <a href="https://www.chisel-lang.org/">Chisel</a>.</li>
+  <li>The desire to unify hardware and software compiler techniques in a shared framework.</li>
+</ul>
+
+<p>CIRCT aims to make hardware compiler development more agile, enabling researchers and engineers to experiment with new optimizations and hardware dialects.</p>
+
+<h2 id="tutorial-content">Tutorial Content</h2>
+<p>The tutorial introduces a range of different tools and optimization passes that can be used to synthesize and verify combinational circuit designs expressed in System Verilog. 
+First you’ll compile a Verilog design with <code class="language-plaintext highlighter-rouge">circt-verilog</code>, producing a snippet of CIRCT IR, that will look a lot like LLVM/MLIR if you’ve ever worked in these software compiler frameworks.</p>
+<pre><code class="language-mlir">hw.module @fma(in %a: i4, in %b: i4, in %c: i4, out d: i9){
+  %c0_i5 = hw.constant 0 : i5
+  %0 = comb.concat %c0_i5, %a : i5, i4
+  %1 = comb.concat %c0_i5, %b : i5, i4
+  %2 = comb.mul %0, %1 : i9
+  %3 = comb.concat %c0_i5, %c : i5, i4
+  %4 = comb.add %2, %3 : i9
+  hw.output %4 : i9
+}
+</code></pre>
+<p>Given some IR, we then move onto optimization which we automate with passes, that literally pass over the IR and make small incremental changes (usually until some fixed point is reached).
+CIRCT has loads of passes built in, and you apply them using <code class="language-plaintext highlighter-rouge">circt-opt</code>. 
+For those wanting to extend CIRCT, a great starting point is trying to extend an existing pass with a new optimization.</p>
+
+<p>Since most ASIC designers, are inherently sceptical (and rightly so), we then describe how one can verify the correctness of the transformation you just applied using <code class="language-plaintext highlighter-rouge">circt-lec</code>. 
+The <code class="language-plaintext highlighter-rouge">circt-lec</code> tool takes two IR modules and checks that they are <em>logically equivalent</em> by formulating an SMT problem, which can be externally validated with your favourite SMT solver (Z3, Bitwuzla etc).
+Lastly, for those wanting to integrate into an existing EDA flow, we learn how to generate Verilog using <code class="language-plaintext highlighter-rouge">firtool</code>.</p>
+
+<p>In the second part of the tutorial, we focused more on my work developing a datapath synthesis engine for CIRCT.
+In this part, we introduced <code class="language-plaintext highlighter-rouge">circt-synth</code> that leverages redundant number representations to produce realy efficient datapath netlists that can outperform the much more mature <a href="todo">Yosys synthesis tool</a>.
+To give a final flavour of what can be done when combining MLIR and CIRCT, Louis demoed his high-level synthesis flow from Python code to a full chip layout.</p>
+
+<p>Whilst preparaing for the tutorial, I discovered markdown slides in Obsidian, which is why the README is a little terse!</p>
+
+<h2 id="arith-2026-summary">ARITH 2026 Summary</h2>
+<p>In addition to the tutorials, ARITH is the main venue for research into computer arithmetic. Below is a list of my favourite papers from the conference (all papers are freely available from the <a href="https://www.arith2026.org/program.html">ARITH program</a>):</p>
+<ul>
+  <li><a href="https://www.arith2026.org/papers/A%20Conflict-Aware%20Learning%20Approach%20to%20SCA%20Verification%20for%20MAC%20Architectures.pdf">A Conflict-Aware Learning Approach to SCA Verification for MAC Architectures</a>
+    <ul>
+      <li>Hopeful that this might provide a way to verify the outputs of <code class="language-plaintext highlighter-rouge">circt-synth</code> much faster!</li>
+    </ul>
+  </li>
+  <li><a href="https://www.arith2026.org/papers/Novel%20Aspects%20of%20IEEE%20SA%20P3109%20Arithmetic%20Formats%20for%20Machine%20Learning.pdf">Novel Aspects of IEEE SA P3109 Arithmetic Formats for Machine Learning</a>
+    <ul>
+      <li>Describing all the details behind the upcoming IEEE standard for AI number formats</li>
+    </ul>
+  </li>
+  <li><a href="https://www.arith2026.org/papers/Efficacy%20of%20Pipelining%20to%20Reduce%20Energy%20of%20Floating-Point%20Adders%20and%20Multipliers.pdf">Efficacy of Pipelining to Reduce Energy of Floating-Point Adders and Multipliers</a>
+    <ul>
+      <li>An awesome way to visualize the switching and glitch frequency as a function of logical depth</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Not available online but Erin Carson’s keynote was also great and raised lots of interesting questions!</p>
+
+<h2 id="thanks">Thanks</h2>
+<p>Huge thanks must go to Anastasia Volkova and Theo Drane who put a lot of effort into organizing both the tutorial day and a demo session during the conference. 
+Martin Kumm and the Fulda team also organized a fantastic conference overall, good culture, good food and good beer the whole way through! 
+Louis Ledoux was a great collaborator on the demo and provided a lot of insights into how far you can take HW design with CIRCT.</p>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/arith_demo_1.JPG-480.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/arith_demo_1.JPG-800.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/arith_demo_1.JPG-1400.webp" />
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/arith_demo_1.JPG" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/arith_demo_2.JPG-480.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/arith_demo_2.JPG-800.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/arith_demo_2.JPG-1400.webp" />
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/arith_demo_2.JPG" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        <figure>
+
+  <picture>
+    
+    <source class="responsive-img-srcset" media="(max-width: 480px)" srcset="/assets/img/fulda-480.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 800px)" srcset="/assets/img/fulda-800.webp" />
+    <source class="responsive-img-srcset" media="(max-width: 1400px)" srcset="/assets/img/fulda-1400.webp" />
+    
+
+    <!-- Fallback to the original file -->
+    <img src="/assets/img/fulda.jpg" class="img-fluid rounded z-depth-1" width="auto" height="auto" onerror="this.onerror=null; $('.responsive-img-srcset').remove();" />
+
+  </picture>
+
+</figure>
+
+    </div>
+</div>
+<div class="caption">
+    Desperately trying to convince industry folks that they should care and Fulda Cathedral
+</div>]]></content><author><name>Samuel Coward</name></author><category term="optimization" /><summary type="html"><![CDATA[My ARITH 2026 tutorial and demo hopefully convinced a few folks to try building hardware with CIRCT!]]></summary></entry><entry><title type="html">Teaching Year 10 How CPUs Work</title><link href="https://cowardsa.github.io/blog/2026/cpus/" rel="alternate" type="text/html" title="Teaching Year 10 How CPUs Work" /><published>2026-05-17T15:12:00+00:00</published><updated>2026-05-17T15:12:00+00:00</updated><id>https://cowardsa.github.io/blog/2026/cpus</id><content type="html" xml:base="https://cowardsa.github.io/blog/2026/cpus/"><![CDATA[<h2 id="warming-up">Warming Up</h2>
 
 <p>The opportunity came about through the <a href="https://royalcommission1851.org/">1851 Royal Commission</a>, who support the London Wonder outreach initiative led by the <a href="https://www.big-ideas.org/">Big Ideas</a> charity.
 They let me take charge of a 2 hour class, containing 20 year 10 students (usually 14 or 15 years old).
