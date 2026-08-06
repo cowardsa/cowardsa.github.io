@@ -11,13 +11,13 @@ It is obvious that AI is changing the way hardware is designed while also creati
 
 My approach is built on three pillars:
 
-- Open-source EDA tools (e.g., CIRCT), as a platform for both research exploration and industrial hardware design.
-- Equality saturation (and related methods) to massively expand the optimization search space.
+- Open-source EDA tools (e.g., [CIRCT](https://circt.llvm.org/)), as a platform for both research exploration and industrial hardware design.
+- [Equality saturation](https://egraphs-good.github.io/) (and related methods) to massively expand the optimization search space.
 - Collaborative formal methods, combining multiple solvers to provide industrial-strength guarantees about the hardware we build.
 
 ## Applying to work with me
 
-I am actively seeking PhD students. Applicants should follow the official Imperial admissions process to understand when and how to apply.
+I am actively seeking PhD students. Applicants should follow the official [Imperial EEE PhD application process](https://www.imperial.ac.uk/electrical-engineering/study/phd/) to understand when and how to apply.
 
 Before submitting an application, please read some of my work to check whether we have common interests. Then reach out with your CV and any research papers or projects you have worked on. Please title emails as "Prospective PhD Candidate".
 
