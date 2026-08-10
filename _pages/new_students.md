@@ -11,7 +11,7 @@ It’s obvious that AI is changing the way hardware is designed but also creatin
 
 My approach is built on three pillars:
 
-- Open-source EDA tools (e.g., [CIRCT](https://circt.llvm.org/)), as a platform for both research exploration and industrial hardware design.
+- Open-source EDA tools (e.g., [CIRCT](https://circt.llvm.org/)), as a platform for research exploration *and* industrial hardware design.
 - [Equality saturation](https://egraphs-good.github.io/) (and related methods) to massively expand the optimization search space.
 - Collaborative formal methods, combining multiple solvers to provide industrial-strength guarantees about the hardware we build.
 
